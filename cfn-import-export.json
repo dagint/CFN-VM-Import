@@ -2,6 +2,102 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Resources":
     {
+      "VMImportRole":
+      {
+          "Type": "AWS::IAM::Role",
+          "Properties":
+          {
+              "RoleName": "vmimport-role",
+              "AssumeRolePolicyDocument":
+              {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                      {
+                          "Effect": "Allow",
+                          "Principal":
+                          {
+                              "Service": "vmie.amazonaws.com"
+                          },
+                          "Action": "sts:AssumeRole",
+                          "Condition":
+                          {
+                              "StringEquals":
+                              {
+                                  "sts:ExternalId": "vmimport-role"
+                              }
+                          }
+                      }
+                  ]
+              },
+              "Path": "/"
+          }
+      },
+      "VMImportRolePol":
+      {
+          "Type": "AWS::IAM::Policy",
+          "Properties":
+          {
+              "PolicyName": "vmimport-role-pol",
+              "PolicyDocument":
+              {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                      {
+                          "Effect": "Allow",
+                          "Action": [
+                              "s3:ListBucket",
+                              "s3:GetBucketLocation"
+                          ],
+                          "Resource": [
+                              {
+                                  "Fn::Join": [
+                                      "",[
+                                          "arn:aws:s3:::",
+                                          {
+                                              "Ref": "ImportExportS3Bucket"
+                                          }
+                                      ]
+                                  ]
+                              }
+                          ]
+                      },
+                      {
+                          "Effect": "Allow",
+                          "Action": [
+                              "s3:GetObject"
+                          ],
+                          "Resource": [
+                              {
+                                  "Fn::Join": [
+                                      "",[
+                                          "arn:aws:s3:::",
+                                          {
+                                              "Ref": "ImportExportS3Bucket"
+                                          },"/*"
+                                      ]
+                                  ]
+                              }
+                          ]
+                      },
+                      {
+                          "Effect": "Allow",
+                          "Action": [
+                              "ec2:ModifySnapshotAttribute",
+                              "ec2:CopySnapshot",
+                              "ec2:RegisterImage",
+                              "ec2:Describe*"
+                          ],
+                          "Resource": "*"
+                      }
+                  ]
+              },
+              "Roles": [
+                  {
+                      "Ref": "VMImportRole"
+                  }
+              ]
+          }
+      },
         "ImportExportS3Bucket":
         {
             "Type": "AWS::S3::Bucket",
@@ -50,7 +146,7 @@
                         "s3:ListBucketMultipartUploads",
                         "s3:PutObject"
                       ],
-                      "Resource": [{"Fn::Join" : ["", ["arn:aws:s3:::" , {"Ref" : "ImportExportS3Bucket"}]]}]
+                      "Resource": [{"Fn::Join" : ["", ["arn:aws:s3:::" , {"Ref" : "ImportExportS3Bucket"}]]},{"Fn::Join" : ["", ["arn:aws:s3:::" , {"Ref" : "ImportExportS3Bucket"},"/*"]]}]
                     },
                     {
                       "Effect": "Allow",
