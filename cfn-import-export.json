@@ -7,7 +7,7 @@
           "Type": "AWS::IAM::Role",
           "Properties":
           {
-              "RoleName": "vmimport-role",
+              "RoleName": "vmimport",
               "AssumeRolePolicyDocument":
               {
                   "Version": "2012-10-17",
