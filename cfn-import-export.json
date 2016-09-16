@@ -7,7 +7,7 @@
           "Type": "AWS::IAM::Role",
           "Properties":
           {
-              "RoleName": "vmimport-role",
+              "RoleName": "vmimport",
               "AssumeRolePolicyDocument":
               {
                   "Version": "2012-10-17",
@@ -23,7 +23,7 @@
                           {
                               "StringEquals":
                               {
-                                  "sts:ExternalId": "vmimport-role"
+                                  "sts:ExternalId": "vmimport"
                               }
                           }
                       }
@@ -188,6 +188,31 @@
             "Ref": "ImportExportS3Bucket"
           },
           "Description": "Name of the S3 bucket which should be used for the import export jobs"
+        },
+        "Group": {
+          "Value": {
+            "Ref": "ImportExportGoup"
+          },
+          "Description": "Group the user needs to belong to to perform the vmimport process."
+        },
+        "Polcy": {
+          "Value": {
+            "Ref": "ImportExportPolicy"
+          },
+          "Description": "This is the policy name associated to to the group the user needs to be a member of"
+        },
+        "RolePolicy": {
+          "Value": {
+            "Ref": "VMImportRolePol"
+          },
+          "Description": "Service Role Policy name which grants access to the s3 bucket where the disk images are stored"
+        },
+        "ServiceRole": {
+          "Value": {
+            "Ref": "VMImportRole"
+          },
+          "Description": "Service Role name which is used for the vmimports"
         }
+
       }
 }
