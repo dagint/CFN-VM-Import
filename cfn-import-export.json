@@ -181,5 +181,13 @@
                 "Groups" : [ { "Ref" : "ImportExportGoup" } ]
             }
         }
-    }
+      },
+      "Outputs": {
+        "BucketName": {
+          "Value": {
+            "Ref": "ImportExportS3Bucket"
+          },
+          "Description": "Name of the S3 bucket which should be used for the import export jobs"
+        }
+      }
 }
