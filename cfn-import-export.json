@@ -7,7 +7,7 @@
           "Type": "AWS::IAM::Role",
           "Properties":
           {
-              "RoleName": "vmimport",
+              "RoleName": "vmimport-role",
               "AssumeRolePolicyDocument":
               {
                   "Version": "2012-10-17",
@@ -23,7 +23,7 @@
                           {
                               "StringEquals":
                               {
-                                  "sts:ExternalId": "vmimport"
+                                  "sts:ExternalId": "vmimport-role"
                               }
                           }
                       }
