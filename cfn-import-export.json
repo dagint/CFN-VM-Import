@@ -23,7 +23,7 @@
                           {
                               "StringEquals":
                               {
-                                  "sts:ExternalId": "vmimport-role"
+                                  "sts:ExternalId": "vmimport"
                               }
                           }
                       }
