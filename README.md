@@ -11,5 +11,5 @@ There will be 2 outputs.
 ## Known challenges
 - This process requires a role with the specific name of "vmimport" if it is not named exactly the imports will fail.  This file does create this role with the correct name, but don't modify this role with something custom or it will cause failures.
 - If there are are any existing roles or groups with the same name existing the template will fail. Please remove those groups if you feel comfortable and try again
-- You will have to check some additional check boxes during the creation, its more for security awareness letting you know it's creating IAM resources.
+- You will have to check some additional check boxes during the creation, its more for security awareness letting you know it's creating IAM resources and IAM resources with custom names.
 - Deleting the cloudformation template will error if there is still data in the S3 bucket.
